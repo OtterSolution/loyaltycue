@@ -61,7 +61,8 @@ h1 { font-size:clamp(46px,8vw,72px); letter-spacing:-.055em; line-height:.98; ma
 footer { border-top:1px solid var(--line); padding:24px 0 38px; color:var(--secondary); font-size:13px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; }
 footer span:last-child { display:flex; gap:14px; }
 [data-lang] { display:none; }
-html[data-language="en"] [data-lang="en"], html[data-language="hu"] [data-lang="hu"] { display:revert; }
+html[data-language="en"] [data-lang="en"],
+html[data-language="hu"] [data-lang="hu"] { display:revert; }
 @media (max-width:700px) {
   .grid { grid-template-columns:1fr; }
   .hero { padding:70px 0 60px; }

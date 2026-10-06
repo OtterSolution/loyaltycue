@@ -11,8 +11,8 @@
     <a href="support.html"><span data-lang="en">Support</span><span data-lang="hu">Támogatás</span></a>
   </div>
   <div class="lang-switch" aria-label="Language">
-    <button type="button" data-lang-button="hu" onclick="setSiteLanguage('hu')">HU</button>
-    <button type="button" data-lang-button="en" onclick="setSiteLanguage('en')">EN</button>
+    <button type="button" data-lang-button="hu">HU</button>
+    <button type="button" data-lang-button="en">EN</button>
   </div>
 </div>
 </nav><main class="paper">
@@ -43,33 +43,4 @@
 <h2>Adatvédelem</h2><p>A LoyaltyCue adatkezeléséről az <a href="privacy.html">Adatvédelmi tájékoztatóban</a> olvashatsz.</p>
 </section></main>
 <footer><span>© 2026 LoyaltyCue</span><span><a href="index.html"><span data-lang="en">Home</span><span data-lang="hu">Kezdőlap</span></a><a href="privacy.html"><span data-lang="en">Privacy Policy</span><span data-lang="hu">Adatvédelem</span></a></span></footer>
-</div><script>
-(function () {
-  const supported = ["en", "hu"];
-  function detectedLanguage() {
-    const saved = localStorage.getItem("loyaltycue-language");
-    if (supported.includes(saved)) return saved;
-    const langs = navigator.languages || [navigator.language || "en"];
-    return langs.some(l => String(l).toLowerCase().startsWith("hu")) ? "hu" : "en";
-  }
-  function setLanguage(lang, remember) {
-    if (!supported.includes(lang)) lang = "en";
-    document.documentElement.dataset.language = lang;
-    document.documentElement.lang = lang;
-    if (remember) localStorage.setItem("loyaltycue-language", lang);
-    document.querySelectorAll("[data-lang-button]").forEach(b => {
-      b.classList.toggle("active", b.dataset.langButton === lang);
-      b.setAttribute("aria-pressed", b.dataset.langButton === lang ? "true" : "false");
-    });
-    const titles = {
-      home: {en:"LoyaltyCue", hu:"LoyaltyCue"},
-      privacy: {en:"Privacy Policy — LoyaltyCue", hu:"Adatvédelmi tájékoztató — LoyaltyCue"},
-      support: {en:"Support — LoyaltyCue", hu:"Támogatás — LoyaltyCue"}
-    };
-    const key = document.body.dataset.page || "home";
-    document.title = titles[key][lang];
-  }
-  window.setSiteLanguage = function(lang){ setLanguage(lang, true); };
-  document.addEventListener("DOMContentLoaded", () => setLanguage(detectedLanguage(), false));
-})();
-</script></body></html>
+</div><script src="language.js"></script></body></html>
