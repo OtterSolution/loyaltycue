@@ -1,37 +1,75 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<link rel="stylesheet" href="style.css">
-<title>Support — LoyaltyCue</title>
-<meta name="description" content="Support for LoyaltyCue.">
-</head>
-<body>
-<div class="wrap">
-<nav><div class="brand"><a href="index.html" style="margin:0;color:inherit;text-decoration:none">LoyaltyCue</a></div><div class="links"><a href="privacy.html">Privacy</a><a href="support.html">Support</a></div></nav>
-<main class="paper">
-<h1>Support</h1>
-<p class="meta">Help with LoyaltyCue</p>
-
+<html lang="en" data-language="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light"><link rel="stylesheet" href="style.css">
+<title>Support — LoyaltyCue</title><meta name="description" content="Support for LoyaltyCue.">
+</head><body data-page="support"><div class="wrap"><nav>
+<div class="brand"><a href="index.html">LoyaltyCue</a></div>
+<div class="nav-right">
+  <div class="links">
+    <a href="privacy.html"><span data-lang="en">Privacy</span><span data-lang="hu">Adatvédelem</span></a>
+    <a href="support.html"><span data-lang="en">Support</span><span data-lang="hu">Támogatás</span></a>
+  </div>
+  <div class="lang-switch" aria-label="Language">
+    <button type="button" data-lang-button="hu" onclick="setSiteLanguage('hu')">HU</button>
+    <button type="button" data-lang-button="en" onclick="setSiteLanguage('en')">EN</button>
+  </div>
+</div>
+</nav><main class="paper">
+<section data-lang="en">
+<h1>Support</h1><p class="meta">Help with LoyaltyCue</p>
 <p>If you need help with LoyaltyCue, have found a problem, or would like to send feedback, you can contact the developer.</p>
-
-<h2>Before contacting support</h2>
-<ul>
+<h2>Before contacting support</h2><ul>
 <li>Make sure you are using the latest available version of LoyaltyCue.</li>
 <li>If a barcode cannot be scanned, verify that the saved card number and barcode type are correct.</li>
-<li>If smart suggestions are not working as expected, check the app's location permission and the location-suggestion setting.</li>
+<li>If smart suggestions are not working as expected, check LoyaltyCue's location permission and the location-suggestion setting.</li>
+<li>If a suggested place is incorrect, you can edit or remove saved places and clear learned location information in the app.</li>
 </ul>
-
-<h2>Contact</h2>
-<p><strong>Developer:</strong> János Puskás</p>
-<p><strong>Email:</strong> <span id="email-placeholder">ottersolution@gmail.com</span></p>
-
-<h2>Privacy</h2>
-<p>For information about how the app handles data, read the <a href="privacy.html">Privacy Policy</a>.</p>
-</main>
-<footer><span>© 2026 LoyaltyCue</span><span><a href="index.html">Home</a><a href="privacy.html">Privacy Policy</a></span></footer>
-</div>
-</body>
-</html>
+<h2>Contact</h2><p><strong>Developer:</strong> János Puskás</p>
+<p class="notice"><strong>Email:</strong> <span><a href="mailto:ottersolution@gmail.com">ottersolution@gmail.com</a></span></p>
+<h2>Privacy</h2><p>For information about how LoyaltyCue handles data, read the <a href="privacy.html">Privacy Policy</a>.</p>
+</section>
+<section data-lang="hu">
+<h1>Támogatás</h1><p class="meta">Segítség a LoyaltyCue használatához</p>
+<p>Ha segítségre van szükséged a LoyaltyCue használatához, hibát találtál, vagy visszajelzést szeretnél küldeni, felveheted a kapcsolatot a fejlesztővel.</p>
+<h2>Mielőtt kapcsolatba lépsz velünk</h2><ul>
+<li>Ellenőrizd, hogy a LoyaltyCue legfrissebb elérhető verzióját használod.</li>
+<li>Ha egy vonalkód nem olvasható be, ellenőrizd, hogy a mentett kártyaszám és a vonalkód típusa megfelelő-e.</li>
+<li>Ha az okos javaslatok nem a várt módon működnek, ellenőrizd a LoyaltyCue helyhozzáférását és a helyalapú javaslatok beállítását.</li>
+<li>Ha egy javasolt hely pontatlan, a mentett helyeket szerkesztheted vagy törölheted, a megtanult helyinformációkat pedig törölheted az alkalmazásból.</li>
+</ul>
+<h2>Kapcsolat</h2><p><strong>Fejlesztő:</strong> János Puskás</p>
+<p class="notice"><strong>E-mail:</strong> <span><a href="mailto:ottersolution@gmail.com">ottersolution@gmail.com</a></span></p>
+<h2>Adatvédelem</h2><p>A LoyaltyCue adatkezeléséről az <a href="privacy.html">Adatvédelmi tájékoztatóban</a> olvashatsz.</p>
+</section></main>
+<footer><span>© 2026 LoyaltyCue</span><span><a href="index.html"><span data-lang="en">Home</span><span data-lang="hu">Kezdőlap</span></a><a href="privacy.html"><span data-lang="en">Privacy Policy</span><span data-lang="hu">Adatvédelem</span></a></span></footer>
+</div><script>
+(function () {
+  const supported = ["en", "hu"];
+  function detectedLanguage() {
+    const saved = localStorage.getItem("loyaltycue-language");
+    if (supported.includes(saved)) return saved;
+    const langs = navigator.languages || [navigator.language || "en"];
+    return langs.some(l => String(l).toLowerCase().startsWith("hu")) ? "hu" : "en";
+  }
+  function setLanguage(lang, remember) {
+    if (!supported.includes(lang)) lang = "en";
+    document.documentElement.dataset.language = lang;
+    document.documentElement.lang = lang;
+    if (remember) localStorage.setItem("loyaltycue-language", lang);
+    document.querySelectorAll("[data-lang-button]").forEach(b => {
+      b.classList.toggle("active", b.dataset.langButton === lang);
+      b.setAttribute("aria-pressed", b.dataset.langButton === lang ? "true" : "false");
+    });
+    const titles = {
+      home: {en:"LoyaltyCue", hu:"LoyaltyCue"},
+      privacy: {en:"Privacy Policy — LoyaltyCue", hu:"Adatvédelmi tájékoztató — LoyaltyCue"},
+      support: {en:"Support — LoyaltyCue", hu:"Támogatás — LoyaltyCue"}
+    };
+    const key = document.body.dataset.page || "home";
+    document.title = titles[key][lang];
+  }
+  window.setSiteLanguage = function(lang){ setLanguage(lang, true); };
+  document.addEventListener("DOMContentLoaded", () => setLanguage(detectedLanguage(), false));
+})();
+</script></body></html>

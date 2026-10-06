@@ -1,33 +1,61 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<link rel="stylesheet" href="style.css">
+<html lang="en" data-language="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light"><link rel="stylesheet" href="style.css">
 <title>LoyaltyCue</title>
-<meta name="description" content="A simple, private way to keep your loyalty and membership cards close at hand.">
-</head>
-<body>
-<div class="wrap">
-<nav>
-  <div class="brand">LoyaltyCue</div>
-  <div class="links"><a href="privacy.html">Privacy</a><a href="support.html">Support</a></div>
+<meta name="description" content="LoyaltyCue — a simple, private way to keep loyalty and membership cards close at hand.">
+</head><body data-page="home"><div class="wrap"><nav>
+<div class="brand"><a href="index.html">LoyaltyCue</a></div>
+<div class="nav-right">
+  <div class="links">
+    <a href="privacy.html"><span data-lang="en">Privacy</span><span data-lang="hu">Adatvédelem</span></a>
+    <a href="support.html"><span data-lang="en">Support</span><span data-lang="hu">Támogatás</span></a>
+  </div>
+  <div class="lang-switch" aria-label="Language">
+    <button type="button" data-lang-button="hu" onclick="setSiteLanguage('hu')">HU</button>
+    <button type="button" data-lang-button="en" onclick="setSiteLanguage('en')">EN</button>
+  </div>
+</div>
 </nav>
 <main>
 <section class="hero">
-  <div class="icon">▤</div>
-  <h1>Your cards.<br>Right when you need them.</h1>
-  <p class="lead">A simple, private place for your loyalty and membership cards, with smart suggestions designed to make the right card faster to reach.</p>
-  <div class="pills"><span class="pill">Private by design</span><span class="pill">Works offline</span><span class="pill">No account required</span></div>
+<div class="icon">▤</div>
+<div data-lang="en"><h1>Your cards.<br>Right when you need them.</h1><p class="lead">A simple, private place for your loyalty and membership cards, with smart suggestions designed to make the right card faster to reach.</p><div class="pills"><span class="pill">Private by design</span><span class="pill">Works offline</span><span class="pill">No account required</span></div></div>
+<div data-lang="hu"><h1>Kártyáid.<br>Pont amikor kellenek.</h1><p class="lead">Egyszerű és adatvédelem-központú hely hűség- és tagsági kártyáidnak, okos javaslatokkal, hogy gyorsabban elérd a megfelelőt.</p><div class="pills"><span class="pill">Adatvédelemre tervezve</span><span class="pill">Offline is működik</span><span class="pill">Nem kell fiók</span></div></div>
 </section>
 <section class="grid">
-  <article class="feature"><h2>Keep it simple</h2><p>Store supported loyalty and membership card codes in one clean, easy-to-use app.</p></article>
-  <article class="feature"><h2>Smart suggestions</h2><p>Optional on-device usage and location information can help surface the card you are likely to need.</p></article>
-  <article class="feature"><h2>Your data stays yours</h2><p>Card data and smart-suggestion learning data are designed to remain on your device and are not used for advertising or tracking.</p></article>
-</section>
-</main>
-<footer><span>© 2026 LoyaltyCue</span><span><a href="privacy.html">Privacy Policy</a><a href="support.html">Support</a></span></footer>
-</div>
-</body>
-</html>
+<article class="feature"><div data-lang="en"><h2>Keep it simple</h2><p>Store supported loyalty and membership card codes in one clean, easy-to-use app.</p></div><div data-lang="hu"><h2>Maradjon egyszerű</h2><p>Tárold hűség- és tagsági kártyáid kódjait egy letisztult, könnyen használható alkalmazásban.</p></div></article>
+<article class="feature"><div data-lang="en"><h2>Smart suggestions</h2><p>Optional on-device usage and location information can help surface the card you are likely to need.</p></div><div data-lang="hu"><h2>Okos javaslatok</h2><p>Az opcionális, eszközön feldolgozott használati és helyinformációk segíthetnek előhozni azt a kártyát, amelyre éppen szükséged lehet.</p></div></article>
+<article class="feature"><div data-lang="en"><h2>Your data stays yours</h2><p>Card data and smart-suggestion learning data are designed to remain on your device and are not used for advertising or tracking.</p></div><div data-lang="hu"><h2>Adataid nálad maradnak</h2><p>A kártyaadatok és az okos javaslatok tanulási adatai az eszközödön maradnak, és nem használjuk őket reklámhoz vagy követéshez.</p></div></article>
+</section></main>
+<footer><span>© 2026 LoyaltyCue</span><span><a href="privacy.html"><span data-lang="en">Privacy Policy</span><span data-lang="hu">Adatvédelem</span></a><a href="support.html"><span data-lang="en">Support</span><span data-lang="hu">Támogatás</span></a></span></footer>
+</div><script>
+(function () {
+  const supported = ["en", "hu"];
+  function detectedLanguage() {
+    const saved = localStorage.getItem("loyaltycue-language");
+    if (supported.includes(saved)) return saved;
+    const langs = navigator.languages || [navigator.language || "en"];
+    return langs.some(l => String(l).toLowerCase().startsWith("hu")) ? "hu" : "en";
+  }
+  function setLanguage(lang, remember) {
+    if (!supported.includes(lang)) lang = "en";
+    document.documentElement.dataset.language = lang;
+    document.documentElement.lang = lang;
+    if (remember) localStorage.setItem("loyaltycue-language", lang);
+    document.querySelectorAll("[data-lang-button]").forEach(b => {
+      b.classList.toggle("active", b.dataset.langButton === lang);
+      b.setAttribute("aria-pressed", b.dataset.langButton === lang ? "true" : "false");
+    });
+    const titles = {
+      home: {en:"LoyaltyCue", hu:"LoyaltyCue"},
+      privacy: {en:"Privacy Policy — LoyaltyCue", hu:"Adatvédelmi tájékoztató — LoyaltyCue"},
+      support: {en:"Support — LoyaltyCue", hu:"Támogatás — LoyaltyCue"}
+    };
+    const key = document.body.dataset.page || "home";
+    document.title = titles[key][lang];
+  }
+  window.setSiteLanguage = function(lang){ setLanguage(lang, true); };
+  document.addEventListener("DOMContentLoaded", () => setLanguage(detectedLanguage(), false));
+})();
+</script></body></html>
